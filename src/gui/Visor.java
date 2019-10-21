@@ -5,7 +5,7 @@ import java.awt.*;
 public class Visor extends JPanel {
     private JPanel contenido;
     Visor(){
-        setLayout(new BorderLayout(5, 5));
+        setLayout(new BorderLayout(7, 7));
         contenido = new JPanel(new GridBagLayout());
         init();
     }
@@ -17,12 +17,14 @@ public class Visor extends JPanel {
         theReto.setOpaque(false);
         theReto.setEditable(false);
         descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 9));
-        Constrains.addComp(theReto, head, new Rectangle(0, 0, 1, 1), 0.2, 0, new Insets(2, 2, 1, 5), GridBagConstraints.NORTHEAST, GridBagConstraints.BOTH);
-        Constrains.addCompX(descripcion, head, new Rectangle(0, 1, 1, 1), 0.1, new Insets(0, 30, 5, 5), GridBagConstraints.EAST, GridBagConstraints.NONE);
+        Constrains.addComp(theReto, head, new Rectangle(0, 0, 1, 1), 0, 0,
+                new Insets(5, 5, 1, 5), GridBagConstraints.WEST, GridBagConstraints.NONE);
+        Constrains.addCompX(descripcion, head, new Rectangle(0, 1, 1, 1), 0.1,
+                new Insets(0, 30, 5, 100), GridBagConstraints.WEST, GridBagConstraints.NONE);
         add(head, BorderLayout.NORTH);
         add(contenido, BorderLayout.CENTER);
     }
-    public JPanel getContenido() {
+    protected JPanel getContenido() {
         return contenido;
     }
 }

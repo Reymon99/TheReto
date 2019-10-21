@@ -10,7 +10,7 @@ class Contenedor extends JPanel {
     Contenedor(){
         setLayout(new CardLayout());
         add(Paneles.WELCOME.toString(), welcome());
-        add(Paneles.LEVES.toString(), new Leves());
+        add(Paneles.LEVES.toString(), leves());
         add(Paneles.GAME.toString(), new Game());
         Events.setContenedor(this);
     }
@@ -34,5 +34,12 @@ class Contenedor extends JPanel {
         Constrains.addCompX(descripcion, panel, new Rectangle(0, 1, 1, 1), 0.1, new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
         Constrains.addComp(press, panel, new Rectangle(0, 2, 1, 1), 0, 0, new Insets(25, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
         return panel;
+    }
+    private Visor leves(){
+        Visor visor = new Visor();
+        Constrains.addComp(new Desplegable('F', "Nivel Fácil", new Color(72, 181, 122)),
+                visor.getContenido(), new Rectangle(0, 0, 1, 1), 1, 1,
+                new Insets(10, 10, 10, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        return visor;
     }
 }
