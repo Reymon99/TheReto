@@ -10,7 +10,7 @@ class Contenedor extends JPanel {
     Contenedor(){
         setLayout(new CardLayout());
         add(Paneles.WELCOME.toString(), welcome());
-        add(Paneles.LEVES.toString(), leves());
+        add(Paneles.LEVES.toString(), levels());
         add(Paneles.GAME.toString(), new Game());
         Events.setContenedor(this);
     }
@@ -30,16 +30,25 @@ class Contenedor extends JPanel {
         press.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
         JLabel descripcion = new JLabel("Piensa un color y mecaniza otro", JLabel.RIGHT);
         descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 20));
-        Constrains.addComp(theReto, panel, new Rectangle(0, 0, 1, 1), 0.2, 0, new Insets(20, 15, 0, 30), GridBagConstraints.NORTHEAST, GridBagConstraints.NONE);
-        Constrains.addCompX(descripcion, panel, new Rectangle(0, 1, 1, 1), 0.1, new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
-        Constrains.addComp(press, panel, new Rectangle(0, 2, 1, 1), 0, 0, new Insets(25, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+        Constrains.addComp(theReto, panel, new Rectangle(0, 0, 1, 1), 0.2, 0,
+                new Insets(20, 15, 0, 30), GridBagConstraints.NORTHWEST, GridBagConstraints.NONE);
+        Constrains.addCompX(descripcion, panel, new Rectangle(0, 1, 1, 1), 0.1,
+                new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
+        Constrains.addComp(press, panel, new Rectangle(0, 2, 1, 1), 0, 0,
+                new Insets(25, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
         return panel;
     }
-    private Visor leves(){
+    private Visor levels(){
         Visor visor = new Visor();
         Constrains.addComp(new Desplegable('F', "Nivel Fácil", new Color(72, 181, 122)),
                 visor.getContenido(), new Rectangle(0, 0, 1, 1), 1, 1,
                 new Insets(10, 10, 10, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        Constrains.addComp(new Desplegable('I', "Nivel Intermedio", new Color(204, 155, 47)),
+                visor.getContenido(), new Rectangle(1, 0, 1, 1), 1, 1,
+                new Insets(10, 10, 10, 10),GridBagConstraints.CENTER, GridBagConstraints.NONE);
+        Constrains.addComp(new Desplegable('D', "Nivel Díficil", new Color(186, 29, 38)),
+                visor.getContenido(), new Rectangle(2, 0, 1, 1), 1, 1,
+                new Insets(10, 10, 10, 10),GridBagConstraints.CENTER, GridBagConstraints.NONE);
         return visor;
     }
 }

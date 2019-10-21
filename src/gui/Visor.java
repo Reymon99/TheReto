@@ -13,10 +13,10 @@ public class Visor extends JPanel {
         JPanel head = new JPanel(new GridBagLayout());
         JTextArea theReto = new JTextArea("The\nReto!");
         JLabel descripcion = new JLabel("Piensa un color y mecaniza otro", SwingConstants.RIGHT);
-        theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 23));
+        theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 30));
         theReto.setOpaque(false);
         theReto.setEditable(false);
-        descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 9));
+        descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 14));
         Constrains.addComp(theReto, head, new Rectangle(0, 0, 1, 1), 0, 0,
                 new Insets(5, 5, 1, 5), GridBagConstraints.WEST, GridBagConstraints.NONE);
         Constrains.addCompX(descripcion, head, new Rectangle(0, 1, 1, 1), 0.1,
