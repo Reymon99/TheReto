@@ -1,8 +1,6 @@
 package tools;
-
 import javax.swing.*;
 import java.awt.*;
-
 public class Events {
     private static JPanel contenedor;
     public static void setContenedor(JPanel contenedor){

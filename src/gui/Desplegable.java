@@ -1,4 +1,5 @@
 package gui;
+import tools.Acciones;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
@@ -10,6 +11,7 @@ class Desplegable extends JPanel {
     private char text;
     private String descripcion;
     private Color color;
+    private Acciones acciones;
     Desplegable(char text, String descripcion, Color color){
         setLayout(new GridBagLayout());
         setBackground(new Color(156, 118, 226, 95));
@@ -19,7 +21,7 @@ class Desplegable extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Events.show(Paneles.GAME);
+                acciones.action();
             }
         });
         init();
@@ -42,5 +44,11 @@ class Desplegable extends JPanel {
                 new Insets(8, 5, 5, 5), GridBagConstraints.NORTH, GridBagConstraints.NONE);
         Constrains.addCompX(bar, this, new Rectangle(0, 2, 1, 1), 1,
                 new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+    }
+    protected char getText(){
+        return text;
+    }
+    protected void setAcciones(Acciones acciones){
+        this.acciones = acciones;
     }
 }
