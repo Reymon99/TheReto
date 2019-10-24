@@ -1,6 +1,5 @@
 package gui;
 import javax.swing.*;
-import java.awt.*;
 public class TheRetos extends JFrame {
     private TheRetos(){
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -1,4 +1,5 @@
 package gui;
+import threads.Temporizador;
 import tools.Constrains;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +8,7 @@ public class Game extends Visor {
     private int intentos;
     private char dificultad;
     private HashMap<Character, String> text;
+    private JLabel time;
     Game(char dificultad){
         super();
         this.dificultad = dificultad;
@@ -18,14 +20,18 @@ public class Game extends Visor {
         init();
     }
     private void init(){
-
+        Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 0, 1, 1), 1,
+                new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
     }
-    protected JDialog play(){
+    JDialog play(){
         JDialog dialog = new JDialog();
         dialog.getContentPane().setLayout(new GridBagLayout());
         JButton play = new JButton("Jugar!");
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
-        play.addActionListener((e) -> dialog.dispose());
+        play.addActionListener((e) -> {
+            dialog.dispose();
+            new Temporizador("03:30", time).start();
+        });
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
         level.setFont(new Font(Font.MONOSPACED, Font.BOLD, 28));
         Constrains.addComp(play, dialog.getContentPane(), new Rectangle(0, 0, 1, 1), 1, 1,
@@ -44,5 +50,12 @@ public class Game extends Visor {
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         return dialog;
+    }
+    private JPanel toolBar(){
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        time = new JLabel("00:00");
+        panel.add(time);
+        return panel;
     }
 }
