@@ -1,6 +1,9 @@
 package gui;
 import threads.Temporizador;
 import tools.Constrains;
+import tools.Events;
+import tools.Paneles;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -32,12 +35,20 @@ public class Game extends Visor {
             dialog.dispose();
             new Temporizador("03:30", time).start();
         });
+        JButton volver = new JButton("Volver");
+        volver.setFont(play.getFont());
+        volver.addActionListener((e) -> {
+            dialog.dispose();
+            Events.show(Paneles.LEVES);
+        });
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
         level.setFont(new Font(Font.MONOSPACED, Font.BOLD, 28));
         Constrains.addComp(play, dialog.getContentPane(), new Rectangle(0, 0, 1, 1), 1, 1,
-                new Insets(30, 30, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.NONE);
-        Constrains.addComp(level, dialog.getContentPane(), new Rectangle(0, 1, 1, 1), 1, 1,
-                new Insets(7, 15, 20, 15), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+                new Insets(30, 30, 10, 10), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+        Constrains.addComp(volver, dialog.getContentPane(), new Rectangle(1, 0, 1, 1), 1, 1,
+                new Insets(30, 10, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+        Constrains.addComp(level, dialog.getContentPane(), new Rectangle(0, 1, 2, 1), 1, 1,
+                new Insets(7, 15, 20, 15), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         dialog.pack();
         dialog.setLocationRelativeTo(this);
         return dialog;
