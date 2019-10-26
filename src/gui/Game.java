@@ -7,10 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 public class Game extends Visor {
-    private int intentos;
     private char dificultad;
     private HashMap<Character, String> text;
     private JLabel time;
+    private JLabel aciertos;
+    private JLabel intentos;
     Game(char dificultad){
         super();
         this.dificultad = dificultad;
@@ -18,7 +19,6 @@ public class Game extends Visor {
         text.put('F', "Nivel Fácil");
         text.put('I', "Nivel Intermedio");
         text.put('D', "Nivel Díficil");
-        intentos = 0;
         init();
     }
     private void init(){
@@ -57,7 +57,7 @@ public class Game extends Visor {
         dialog.setLocationRelativeTo(this);
         return dialog;
     }
-    private JDialog continuePlay(){
+    public JDialog continuePlay(){
         JDialog dialog = new JDialog();
         dialog.getContentPane().setLayout(new GridBagLayout());
         dialog.setUndecorated(false);
@@ -79,10 +79,29 @@ public class Game extends Visor {
         return dialog;
     }
     private JPanel toolBar(){
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         time = new JLabel("00:00");
-        panel.add(time);
+        JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
+        intentos = new JLabel("Intentos: 0");
+        aciertos = new JLabel("Aciertos: 0");
+        Constrains.addCompX(intentos, panel, new Rectangle(0, 0, 1, 1), 1,
+                new Insets(1, 1, 1, 1), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(aciertos, panel, new Rectangle(1, 0, 1, 1), 1,
+                new Insets(1, 2, 1, 50), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(level, panel, new Rectangle(2, 0, 1, 1), 1,
+                new Insets(1, 50, 1, 50), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(time, panel, new Rectangle(3, 0, 1, 1), 1,
+                new Insets(1, 50, 1, 1), GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL);
         return panel;
+    }
+    public JLabel getTime() {
+        return time;
+    }
+    public JLabel getAciertos() {
+        return aciertos;
+    }
+    public JLabel getIntentos() {
+        return intentos;
     }
 }
