@@ -4,6 +4,7 @@ import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.HashMap;
 public class Game extends Visor {
@@ -22,8 +23,42 @@ public class Game extends Visor {
         init();
     }
     private void init(){
-        Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 0, 1, 1), 1,
-                new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+        JLabel color = new JLabel("Color", SwingConstants.CENTER);
+        JButton yellow = new JButton("Amarrillo");
+        JButton blue = new JButton("Azul");
+        JButton green = new JButton("Verde");
+        JButton red = new JButton("Rojo");
+        JButton white = new JButton("Blanco");
+        yellow.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
+        color.setFont(new Font(Font.DIALOG, Font.BOLD, 100));
+        blue.setFont(yellow.getFont());
+        green.setFont(yellow.getFont());
+        red.setFont(yellow.getFont());
+        white.setFont(yellow.getFont());
+        yellow.setBackground(Color.YELLOW);
+        blue.setBackground(Color.BLUE);
+        green.setBackground(Color.GREEN);
+        red.setBackground(Color.RED);
+        white.setBackground(Color.WHITE);
+        blue.setForeground(Color.WHITE);
+        color.setOpaque(true);
+        color.setBackground(Color.YELLOW);
+        color.setForeground(Color.BLUE);
+        color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
+                new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+        Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
+                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(blue, getContenido(), new Rectangle(1, 1, 1, 1), 1, 1,
+                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(green, getContenido(), new Rectangle(2, 1, 1, 1), 1, 1,
+                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(red, getContenido(), new Rectangle(3, 1, 1, 1), 1, 1,
+                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(white, getContenido(), new Rectangle(4, 1, 1, 1), 1, 1,
+                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 2, 5, 1), 1,
+                new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL);
     }
     JDialog play(){
         JDialog dialog = new JDialog();
@@ -33,7 +68,7 @@ public class Game extends Visor {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            new Temporizador("03:30", time).start();
+            new Temporizador("03:30", this).start();
         });
         JButton volver = new JButton("Volver");
         volver.setFont(play.getFont());

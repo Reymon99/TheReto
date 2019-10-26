@@ -1,16 +1,23 @@
 package threads;
-import javax.swing.*;
+import gui.Game;
 public class Temporizador extends Thread {
     private int second;
     private int minute;
-    private JLabel label;
-    public Temporizador(String time, JLabel label){
-        this.label = label;
+    private Game game;
+    private static boolean lineGame;
+    static {
+        Temporizador.lineGame = false;
+    }
+    public Temporizador(String time, Game game){
+        this.game = game;
         minute = Integer.parseInt(time.substring(0, time.indexOf(':')));
         second = Integer.parseInt(time.substring(time.indexOf(':') + 1));
     }
     @Override
     public void run() {
+        Temporizador.lineGame = true;
+        String[] intentos = game.getIntentos().getText().split( ": ");
+        game.getIntentos().setText(intentos[0] + ": " + (Integer.parseInt(intentos[1]) + 1));
         timeUp();
         while (minute != 0 || second != 0) {
             if (second == 0) {
@@ -24,12 +31,14 @@ public class Temporizador extends Thread {
             }
             timeUp();
         }
+        game.continuePlay().setVisible(true);
+        Temporizador.lineGame = false;
     }
     private String format(int number){
         return String.valueOf(String.valueOf(number).length() == 2 ? number : "0" + number);
     }
     private void timeUp(){
-        label.setText(format(minute) + ':' + format(second));
-        label.updateUI();
+        game.getTime().setText(format(minute) + ':' + format(second));
+        game.getTime().updateUI();
     }
 }
