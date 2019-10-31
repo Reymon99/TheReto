@@ -4,7 +4,7 @@ public class Temporizador extends Thread {
     private int second;
     private int minute;
     private Game game;
-    private static boolean lineGame;
+    public static boolean lineGame;
     static {
         Temporizador.lineGame = false;
     }

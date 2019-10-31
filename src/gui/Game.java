@@ -1,4 +1,5 @@
 package gui;
+import threads.MultiColor;
 import threads.Temporizador;
 import tools.Constrains;
 import tools.Events;
@@ -13,6 +14,7 @@ public class Game extends Visor {
     private JLabel time;
     private JLabel aciertos;
     private JLabel intentos;
+    private JLabel color;
     public static final HashMap<Integer, Color> colors;
     static {
         colors = new HashMap<>();
@@ -32,7 +34,7 @@ public class Game extends Visor {
         init();
     }
     private void init(){
-        JLabel color = new JLabel("Color", SwingConstants.CENTER);
+        color = new JLabel("Color", SwingConstants.CENTER);
         JButton yellow = new JButton("Amarrillo");
         JButton blue = new JButton("Azul");
         JButton green = new JButton("Verde");
@@ -78,6 +80,7 @@ public class Game extends Visor {
         play.addActionListener((e) -> {
             dialog.dispose();
             new Temporizador("03:30", this).start();
+            new MultiColor(this).start();
         });
         JButton volver = new JButton("Volver");
         volver.setFont(play.getFont());
@@ -147,5 +150,8 @@ public class Game extends Visor {
     }
     public JLabel getIntentos() {
         return intentos;
+    }
+    public JLabel getColor(){
+        return color;
     }
 }
