@@ -43,7 +43,7 @@ class Contenedor extends JPanel {
         Constrains.addCompX(descripcion, panel, new Rectangle(0, 1, 1, 1), 0.1,
                 new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
         Constrains.addComp(press, panel, new Rectangle(0, 2, 1, 1), 0, 0,
-                new Insets(25, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+                new Insets(125, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
         return panel;
     }
     private Visor levels(){

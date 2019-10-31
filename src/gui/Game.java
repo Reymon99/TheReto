@@ -17,7 +17,15 @@ public class Game extends Visor {
     private JLabel aciertos;
     private JLabel intentos;
     private JLabel color;
+    private JLabel acertos;
+    private final ArrayList<String> acertosText;
     public static final ArrayList<Colour> colors;
+    {
+        acertosText = new ArrayList<>(3);
+        acertosText.add("Intentalo nuevamente");
+        acertosText.add("Felicitaciones acertaste!!!");
+        acertosText.add("");
+    }
     static {
         colors = new ArrayList<>();
         colors.add(new Colour("Amarillo", Color.YELLOW));
@@ -36,6 +44,7 @@ public class Game extends Visor {
         init();
     }
     private void init(){
+        acertos = new JLabel(acertosText.get(2), SwingConstants.CENTER);
         color = new JLabel("Color", SwingConstants.CENTER);
         JButton yellow = new JButton(Game.colors.get(0).getText());
         JButton blue = new JButton(Game.colors.get(1).getText());
@@ -44,6 +53,7 @@ public class Game extends Visor {
         JButton white = new JButton(Game.colors.get(4).getText());
         yellow.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         color.setFont(new Font(Font.DIALOG, Font.BOLD, 100));
+        acertos.setFont(new Font(Font.MONOSPACED, Font.ITALIC, 22));
         blue.setFont(yellow.getFont());
         green.setFont(yellow.getFont());
         red.setFont(yellow.getFont());
@@ -61,16 +71,18 @@ public class Game extends Visor {
         Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
                 new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addComp(blue, getContenido(), new Rectangle(1, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addComp(green, getContenido(), new Rectangle(2, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addComp(red, getContenido(), new Rectangle(3, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addComp(white, getContenido(), new Rectangle(4, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 100, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
-        Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 2, 5, 1), 1,
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(acertos, getContenido(), new Rectangle(0, 2, 5, 1), 1, 1,
+                new Insets(30, 10, 40, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 3, 5, 1), 1,
                 new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL);
     }
     JDialog play(){
