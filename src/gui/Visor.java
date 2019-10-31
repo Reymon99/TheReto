@@ -12,7 +12,7 @@ public class Visor extends JPanel {
     private void init(){
         JPanel head = new JPanel(new GridBagLayout());
         JTextArea theReto = new JTextArea("The\nReto!");
-        JLabel descripcion = new JLabel("Piensa un color y mecaniza otro", SwingConstants.RIGHT);
+        JLabel descripcion = new JLabel("Lee un color y mecaniza otro", SwingConstants.RIGHT);
         theReto.setToolTipText("Desarrollado por Sergio Majé");
         theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 30));
         theReto.setOpaque(false);

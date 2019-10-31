@@ -36,7 +36,7 @@ class Contenedor extends JPanel {
         });
         JLabel press = new JLabel("Presione cualquier tecla para continuar", JLabel.CENTER);
         press.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
-        JLabel descripcion = new JLabel("Piensa un color y mecaniza otro", JLabel.RIGHT);
+        JLabel descripcion = new JLabel("Lee un color y mecaniza otro", JLabel.RIGHT);
         descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 20));
         Constrains.addComp(theReto, panel, new Rectangle(0, 0, 1, 1), 0.2, 0,
                 new Insets(20, 15, 0, 30), GridBagConstraints.NORTHWEST, GridBagConstraints.NONE);
