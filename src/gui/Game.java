@@ -13,6 +13,15 @@ public class Game extends Visor {
     private JLabel time;
     private JLabel aciertos;
     private JLabel intentos;
+    public static final HashMap<Integer, Color> colors;
+    static {
+        colors = new HashMap<>();
+        colors.put(1, Color.YELLOW);
+        colors.put(2, Color.BLUE);
+        colors.put(3, Color.GREEN);
+        colors.put(4, Color.RED);
+        colors.put(5, Color.WHITE);
+    }
     Game(char dificultad){
         super();
         this.dificultad = dificultad;
@@ -35,11 +44,11 @@ public class Game extends Visor {
         green.setFont(yellow.getFont());
         red.setFont(yellow.getFont());
         white.setFont(yellow.getFont());
-        yellow.setBackground(Color.YELLOW);
-        blue.setBackground(Color.BLUE);
-        green.setBackground(Color.GREEN);
-        red.setBackground(Color.RED);
-        white.setBackground(Color.WHITE);
+        yellow.setBackground(Game.colors.get(1));
+        blue.setBackground(Game.colors.get(2));
+        green.setBackground(Game.colors.get(3));
+        red.setBackground(Game.colors.get(4));
+        white.setBackground(Game.colors.get(5));
         blue.setForeground(Color.WHITE);
         color.setOpaque(true);
         color.setBackground(Color.YELLOW);
