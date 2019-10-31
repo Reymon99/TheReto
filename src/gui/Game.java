@@ -1,12 +1,14 @@
 package gui;
 import threads.MultiColor;
 import threads.Temporizador;
+import tools.Colour;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 public class Game extends Visor {
     private char dificultad;
@@ -15,14 +17,14 @@ public class Game extends Visor {
     private JLabel aciertos;
     private JLabel intentos;
     private JLabel color;
-    public static final HashMap<Integer, Color> colors;
+    public static final ArrayList<Colour> colors;
     static {
-        colors = new HashMap<>();
-        colors.put(1, Color.YELLOW);
-        colors.put(2, Color.BLUE);
-        colors.put(3, Color.GREEN);
-        colors.put(4, Color.RED);
-        colors.put(5, Color.WHITE);
+        colors = new ArrayList<>();
+        colors.add(new Colour("Amarillo", Color.YELLOW));
+        colors.add(new Colour("Azul", Color.BLUE));
+        colors.add(new Colour("Verde", Color.GREEN));
+        colors.add(new Colour("Rojo", Color.RED));
+        colors.add(new Colour("Blanco", Color.WHITE));
     }
     Game(char dificultad){
         super();
@@ -35,22 +37,22 @@ public class Game extends Visor {
     }
     private void init(){
         color = new JLabel("Color", SwingConstants.CENTER);
-        JButton yellow = new JButton("Amarrillo");
-        JButton blue = new JButton("Azul");
-        JButton green = new JButton("Verde");
-        JButton red = new JButton("Rojo");
-        JButton white = new JButton("Blanco");
+        JButton yellow = new JButton(Game.colors.get(0).getText());
+        JButton blue = new JButton(Game.colors.get(1).getText());
+        JButton green = new JButton(Game.colors.get(2).getText());
+        JButton red = new JButton(Game.colors.get(3).getText());
+        JButton white = new JButton(Game.colors.get(4).getText());
         yellow.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         color.setFont(new Font(Font.DIALOG, Font.BOLD, 100));
         blue.setFont(yellow.getFont());
         green.setFont(yellow.getFont());
         red.setFont(yellow.getFont());
         white.setFont(yellow.getFont());
-        yellow.setBackground(Game.colors.get(1));
-        blue.setBackground(Game.colors.get(2));
-        green.setBackground(Game.colors.get(3));
-        red.setBackground(Game.colors.get(4));
-        white.setBackground(Game.colors.get(5));
+        yellow.setBackground(Game.colors.get(0).getColor());
+        blue.setBackground(Game.colors.get(1).getColor());
+        green.setBackground(Game.colors.get(2).getColor());
+        red.setBackground(Game.colors.get(3).getColor());
+        white.setBackground(Game.colors.get(4).getColor());
         blue.setForeground(Color.WHITE);
         color.setOpaque(true);
         color.setBackground(Color.YELLOW);
