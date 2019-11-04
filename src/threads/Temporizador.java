@@ -1,17 +1,22 @@
 package threads;
 import gui.Game;
+import java.util.HashMap;
 public class Temporizador extends Thread {
     private int second;
     private int minute;
     private Game game;
     public static boolean lineGame;
     private boolean control;
-    public Temporizador(String time, Game game, boolean control){
+    private char pausa;
+    private HashMap<Character, Long> pausaTime;
+    public Temporizador(String time, Game game, boolean control, char pausa){
         this.game = game;
         this.control = control;
+        this.pausa = pausa;
         minute = Integer.parseInt(time.substring(0, time.indexOf(':')));
         second = Integer.parseInt(time.substring(time.indexOf(':') + 1));
         lineGame = false;
+        loadPause();
     }
     @Override
     public void run() {
@@ -27,7 +32,7 @@ public class Temporizador extends Thread {
             }
             else second--;
             try {
-                Thread.sleep(1000);
+                Thread.sleep(pausaTime.get(pausa));
             } catch (InterruptedException e) {//None
             }
             timeUp();
@@ -41,6 +46,12 @@ public class Temporizador extends Thread {
     private void timeUp(){
         game.getTime().setText(format(minute) + ':' + format(second));
         game.getTime().updateUI();
+    }
+    private void loadPause(){
+        pausaTime = new HashMap<>();
+        pausaTime.put('F', 1000L);
+        pausaTime.put('I', 800L);
+        pausaTime.put('D', 600L);
     }
     public boolean isLineGame() {
         return lineGame;
