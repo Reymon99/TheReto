@@ -5,6 +5,7 @@ import tools.Colour;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
+import tools.Time;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
@@ -114,7 +115,7 @@ public class Game extends Visor implements ActionListener {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            new Temporizador("03:30", this, false, dificultad).start();
+            new Temporizador("00:30", this, false, dificultad, Time.TIME).start();
             new MultiColor(this).start();
         });
         JButton volver = new JButton("Volver");
