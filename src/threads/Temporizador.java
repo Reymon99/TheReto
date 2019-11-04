@@ -5,17 +5,18 @@ public class Temporizador extends Thread {
     private int minute;
     private Game game;
     public static boolean lineGame;
-    static {
-        Temporizador.lineGame = false;
-    }
-    public Temporizador(String time, Game game){
+    private boolean control;
+    public Temporizador(String time, Game game, boolean control){
         this.game = game;
+        this.control = control;
         minute = Integer.parseInt(time.substring(0, time.indexOf(':')));
         second = Integer.parseInt(time.substring(time.indexOf(':') + 1));
+        lineGame = false;
     }
     @Override
     public void run() {
-        Temporizador.lineGame = true;
+        //Calcular el parado con control y con lineGame
+        setLineGame(true);
         String[] intentos = game.getIntentos().getText().split( ": ");
         game.getIntentos().setText(intentos[0] + ": " + (Integer.parseInt(intentos[1]) + 1));
         timeUp();
@@ -32,7 +33,7 @@ public class Temporizador extends Thread {
             timeUp();
         }
         game.continuePlay().setVisible(true);
-        Temporizador.lineGame = false;
+        setLineGame(false);
     }
     private String format(int number){
         return String.valueOf(String.valueOf(number).length() == 2 ? number : "0" + number);
@@ -40,5 +41,11 @@ public class Temporizador extends Thread {
     private void timeUp(){
         game.getTime().setText(format(minute) + ':' + format(second));
         game.getTime().updateUI();
+    }
+    public boolean isLineGame() {
+        return lineGame;
+    }
+    public void setLineGame(boolean lineGame) {
+        this.lineGame = lineGame;
     }
 }

@@ -8,9 +8,13 @@ import tools.Paneles;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
-public class Game extends Visor {
+public class Game extends Visor implements ActionListener {
     private char dificultad;
     private HashMap<Character, String> text;
     private JLabel time;
@@ -18,6 +22,7 @@ public class Game extends Visor {
     private JLabel intentos;
     private JLabel color;
     private JLabel acertos;
+    private JLabel timeGame;
     private final ArrayList<String> acertosText;
     public static final ArrayList<Colour> colors;
     {
@@ -46,13 +51,13 @@ public class Game extends Visor {
     private void init(){
         acertos = new JLabel(acertosText.get(2), SwingConstants.CENTER);
         color = new JLabel("Color", SwingConstants.CENTER);
-        JButton yellow = new JButton(Game.colors.get(0).getText());
-        JButton blue = new JButton(Game.colors.get(1).getText());
-        JButton green = new JButton(Game.colors.get(2).getText());
-        JButton red = new JButton(Game.colors.get(3).getText());
-        JButton white = new JButton(Game.colors.get(4).getText());
+        JButton yellow = new JButton();
+        JButton blue = new JButton();
+        JButton green = new JButton();
+        JButton red = new JButton();
+        JButton white = new JButton();
         yellow.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
-        color.setFont(new Font(Font.DIALOG, Font.BOLD, 100));
+        color.setFont(new Font(Font.DIALOG, Font.BOLD, 80));
         acertos.setFont(new Font(Font.MONOSPACED, Font.ITALIC, 22));
         blue.setFont(yellow.getFont());
         green.setFont(yellow.getFont());
@@ -64,26 +69,42 @@ public class Game extends Visor {
         red.setBackground(Game.colors.get(3).getColor());
         white.setBackground(Game.colors.get(4).getColor());
         blue.setForeground(Color.WHITE);
+        yellow.addActionListener(this);
+        blue.addActionListener(this);
+        green.addActionListener(this);
+        red.addActionListener(this);
+        white.addActionListener(this);
+        yellow.setPreferredSize(new Dimension(80, 30));
+        blue.setPreferredSize(yellow.getPreferredSize());
+        green.setPreferredSize(yellow.getPreferredSize());
+        red.setPreferredSize(yellow.getPreferredSize());
+        white.setPreferredSize(yellow.getPreferredSize());
         color.setOpaque(true);
         color.setBackground(Color.YELLOW);
         color.setForeground(Color.BLUE);
         color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        color.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Temporizador.lineGame = false;
+            }
+        });
         Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
                 new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 20, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
         Constrains.addComp(blue, getContenido(), new Rectangle(1, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
         Constrains.addComp(green, getContenido(), new Rectangle(2, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
         Constrains.addComp(red, getContenido(), new Rectangle(3, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.NONE);
         Constrains.addComp(white, getContenido(), new Rectangle(4, 1, 1, 1), 1, 1,
-                new Insets(10, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 10, 5, 20), GridBagConstraints.CENTER, GridBagConstraints.NONE);
         Constrains.addComp(acertos, getContenido(), new Rectangle(0, 2, 5, 1), 1, 1,
                 new Insets(30, 10, 40, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 3, 5, 1), 1,
-                new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.HORIZONTAL);
+                new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
     }
     JDialog play(){
         JDialog dialog = new JDialog();
@@ -93,7 +114,7 @@ public class Game extends Visor {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            new Temporizador("03:30", this).start();
+            new Temporizador("03:30", this, false).start();
             new MultiColor(this).start();
         });
         JButton volver = new JButton("Volver");
@@ -143,17 +164,20 @@ public class Game extends Visor {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         time = new JLabel("00:00");
+        timeGame = new JLabel(time.getText());
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
         intentos = new JLabel("Intentos: 0");
         aciertos = new JLabel("Aciertos: 0");
         Constrains.addCompX(intentos, panel, new Rectangle(0, 0, 1, 1), 1,
-                new Insets(1, 1, 1, 1), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(1, 10, 1, 1), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addCompX(aciertos, panel, new Rectangle(1, 0, 1, 1), 1,
-                new Insets(1, 2, 1, 50), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(1, 2, 1, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addCompX(level, panel, new Rectangle(2, 0, 1, 1), 1,
-                new Insets(1, 50, 1, 50), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
-        Constrains.addCompX(time, panel, new Rectangle(3, 0, 1, 1), 1,
-                new Insets(1, 50, 1, 1), GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL);
+                new Insets(1, 30, 1, 30), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(timeGame, panel, new Rectangle(3, 0, 1, 1), 1,
+                new Insets(1, 30, 1, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addCompX(time, panel, new Rectangle(4, 0, 1, 1), 1,
+                new Insets(1, 30, 1, 10), GridBagConstraints.EAST, GridBagConstraints.HORIZONTAL);
         return panel;
     }
     public JLabel getTime() {
@@ -167,5 +191,12 @@ public class Game extends Visor {
     }
     public JLabel getColor(){
         return color;
+    }
+    public JLabel getTimeGame(){
+        return timeGame;
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

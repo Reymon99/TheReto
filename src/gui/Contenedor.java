@@ -8,7 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 class Contenedor extends JPanel {
-     private static HashMap<Paneles, Game> games;
+    private static HashMap<Paneles, Game> games;
     Contenedor(){
         setLayout(new CardLayout());
         games = new HashMap<>();
