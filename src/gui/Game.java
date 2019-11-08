@@ -115,7 +115,7 @@ public class Game extends Visor implements ActionListener {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            new Temporizador("00:30", this, false, dificultad, Time.TIME).start();
+            //new Temporizador("00:30", this, false, dificultad, Time.TIME).start();
             new MultiColor(this).start();
         });
         JButton volver = new JButton("Volver");
