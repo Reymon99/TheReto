@@ -15,36 +15,12 @@ class Contenedor extends JPanel {
         games.put(Paneles.GAME_FACIL, new Game('F'));
         games.put(Paneles.GAME_INTERMEDIO, new Game('I'));
         games.put(Paneles.GAME_DIFICIL, new Game('D'));
-        add(Paneles.WELCOME.toString(), welcome());
+        add(Paneles.WELCOME.toString(), new Welcome());
         add(Paneles.LEVES.toString(), levels());
         add(Paneles.GAME_FACIL.toString(), games.get(Paneles.GAME_FACIL));
         add(Paneles.GAME_INTERMEDIO.toString(), games.get(Paneles.GAME_INTERMEDIO));
         add(Paneles.GAME_DIFICIL.toString(), games.get(Paneles.GAME_DIFICIL));
         Events.setContenedor(this);
-    }
-    private JPanel welcome(){
-        JPanel panel = new JPanel(new GridBagLayout());
-        JTextArea theReto = new JTextArea("The\nReto!");
-        theReto.setFont(new Font(Font.MONOSPACED, Font.BOLD + Font.ITALIC, 120));
-        theReto.setOpaque(false);
-        theReto.setEditable(false);
-        theReto.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                Events.show(Paneles.LEVES);
-            }
-        });
-        JLabel press = new JLabel("Presione cualquier tecla para continuar", JLabel.CENTER);
-        press.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
-        JLabel descripcion = new JLabel("Lee un color y mecaniza otro", JLabel.RIGHT);
-        descripcion.setFont(new Font(Font.DIALOG, Font.PLAIN + Font.ITALIC, 20));
-        Constrains.addComp(theReto, panel, new Rectangle(0, 0, 1, 1), 0.2, 0,
-                new Insets(20, 15, 0, 30), GridBagConstraints.NORTHWEST, GridBagConstraints.NONE);
-        Constrains.addCompX(descripcion, panel, new Rectangle(0, 1, 1, 1), 0.1,
-                new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
-        Constrains.addComp(press, panel, new Rectangle(0, 2, 1, 1), 0, 0,
-                new Insets(125, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
-        return panel;
     }
     private Visor levels(){
         Visor visor = new Visor();

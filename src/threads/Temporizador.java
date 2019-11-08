@@ -8,7 +8,6 @@ public class Temporizador extends Thread {
     private int minute;
     private Game game;
     public static boolean lineGame;
-    private boolean control;
     private char pausa;
     private Time time;
     private HashMap<Character, Long> pausaTime;
@@ -16,9 +15,8 @@ public class Temporizador extends Thread {
     static {
         lineGame = false;
     }
-    public Temporizador(String clock, Game game, boolean control, char pausa, Time time){
+    public Temporizador(String clock, Game game, char pausa, Time time){
         this.game = game;
-        this.control = control;
         this.pausa = pausa;
         this.time = time;
         minute = Integer.parseInt(clock.substring(0, clock.indexOf(':')));
@@ -57,7 +55,6 @@ public class Temporizador extends Thread {
         temporizador(game.getTimeGame());
     }
     private void temporizador(JLabel clock){
-        //Calcular el parado con control y con lineGame
         while (minute != 0 || second != 0) {
             if (second == 0) {
                 second = 59;
