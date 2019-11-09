@@ -147,6 +147,7 @@ public class Game extends Visor implements ActionListener {
     }
     private JDialog continuePlay(){
         continuePlay = new JDialog();
+        continuePlay.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         continuePlay.getContentPane().setLayout(new GridBagLayout());
         continuePlay.setUndecorated(false);
         JLabel theReto = new JLabel("The Reto!", SwingConstants.CENTER);
@@ -168,7 +169,7 @@ public class Game extends Visor implements ActionListener {
         Constrains.addComp(volver, continuePlay.getContentPane(), new Rectangle(1, 1, 1, 1), 1, 1,
                 new Insets(15, 5, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(continuar, continuePlay.getContentPane(), new Rectangle(0, 1, 1, 1), 1, 1,
-                new Insets(15, 30, 10, 5), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+                new Insets(15, 30, 10, 5), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         continuePlay.pack();
         continuePlay.setLocationRelativeTo(this);
         return continuePlay;
@@ -241,9 +242,12 @@ public class Game extends Visor implements ActionListener {
         intentos.setText("Intentos: " + (Seleccion.intentos=0));
         acertos.setText(acertosText.get(2));
         updateUI();
+        Juego.lineGame = false;
+        Juego.stop = true;
     }
     private void intento(){
         acertos.setText(acertosText.get(2));
+        Seleccion.lineIntento = true;
         new Seleccion(timeDificultad.get(dificultad), this).start();
         new MultiColor(this).start();
     }

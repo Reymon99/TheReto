@@ -49,4 +49,16 @@ public abstract class Temporizador extends Thread implements Acciones {
         } catch (InterruptedException e) {//None
         }
     }
+    protected int getSecond() {
+        return second;
+    }
+    protected int getMinute() {
+        return minute;
+    }
+    protected void setSecond(int second) {
+        this.second = second;
+    }
+    protected void setMinute(int minute) {
+        this.minute = minute;
+    }
 }

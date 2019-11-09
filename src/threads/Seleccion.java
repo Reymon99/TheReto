@@ -14,7 +14,6 @@ public class Seleccion extends Temporizador {
     public void run() {
         if (Juego.lineGame) {
             updateIntentos();
-            lineIntento = true;
             updateTime(getGame().getTimeGame());
             temporizador(getGame().getTimeGame());
             lineIntento = false;
