@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 public class Game extends Visor implements ActionListener {
     private char dificultad;
-    private HashMap<Character, String> text;
-    private HashMap<Character, String> timeDificultad;
     private JLabel time;
     private JLabel aciertos;
     private JLabel intentos;
@@ -26,12 +24,22 @@ public class Game extends Visor implements ActionListener {
     private int acierto;
     private JDialog continuePlay;
     private final ArrayList<String> acertosText;
+    private final HashMap<Character, String> text;
+    private final HashMap<Character, String> timeDificultad;
     public static final ArrayList<Colour> colors;
     {
         acertosText = new ArrayList<>(3);
         acertosText.add("Intentalo nuevamente");
         acertosText.add("Felicitaciones acertaste!!!");
         acertosText.add("");
+        timeDificultad = new HashMap<>();
+        timeDificultad.put('F', "00:15");
+        timeDificultad.put('I', "00:10");
+        timeDificultad.put('D', "00:08");
+        text = new HashMap<>();
+        text.put('F', "Nivel Fácil");
+        text.put('I', "Nivel Intermedio");
+        text.put('D', "Nivel Díficil");
     }
     static {
         colors = new ArrayList<>(5);
@@ -45,14 +53,6 @@ public class Game extends Visor implements ActionListener {
         super();
         this.dificultad = dificultad;
         acierto = 0;
-        text = new HashMap<>();
-        text.put('F', "Nivel Fácil");
-        text.put('I', "Nivel Intermedio");
-        text.put('D', "Nivel Díficil");
-        timeDificultad = new HashMap<>();
-        timeDificultad.put('F', "00:15");
-        timeDificultad.put('I', "00:10");
-        timeDificultad.put('D', "00:08");
         init();
     }
     private void init(){
@@ -121,8 +121,7 @@ public class Game extends Visor implements ActionListener {
         play.addActionListener((e) -> {
             dialog.dispose();
             new Juego("03:30", this).start();
-            new Seleccion(timeDificultad.get(dificultad), this).start();
-            new MultiColor(this).start();
+            intento();
         });
         JButton volver = new JButton("Volver");
         volver.setFont(play.getFont());
@@ -158,10 +157,18 @@ public class Game extends Visor implements ActionListener {
             continuePlay.dispose();
             volver();
         });
+        JButton continuar = new JButton("Continuar");
+        continuar.setFont(volver.getFont());
+        continuar.addActionListener((e) -> {
+            continuePlay.dispose();
+            intento();
+        });
         Constrains.addComp(theReto, continuePlay.getContentPane(), new Rectangle(0, 0, 2, 1), 1, 1,
                 new Insets(5, 15, 5, 15), GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL);
         Constrains.addComp(volver, continuePlay.getContentPane(), new Rectangle(1, 1, 1, 1), 1, 1,
-                new Insets(15, 10, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+                new Insets(15, 5, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+        Constrains.addComp(continuar, continuePlay.getContentPane(), new Rectangle(0, 1, 1, 1), 1, 1,
+                new Insets(15, 30, 10, 5), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         continuePlay.pack();
         continuePlay.setLocationRelativeTo(this);
         return continuePlay;
@@ -211,9 +218,11 @@ public class Game extends Visor implements ActionListener {
         if (Juego.lineGame && !Seleccion.lineIntento) {
             if (Integer.parseInt(e.getActionCommand()) == MultiColor.foreground) {
                 aciertos.setText(aciertos());
+                acertos.setText(acertosText.get(1));
                 aciertos.updateUI();
-                updateUI();
-            }
+            } else acertos.setText(acertosText.get(0));
+            acertos.updateUI();
+            updateUI();
             continuePlay().setVisible(true);
         } else estadisticas().setVisible(true);
     }
@@ -230,5 +239,12 @@ public class Game extends Visor implements ActionListener {
         Events.show(Paneles.LEVES);
         aciertos.setText(aciertos(acierto=0));
         intentos.setText("Intentos: " + (Seleccion.intentos=0));
+        acertos.setText(acertosText.get(2));
+        updateUI();
+    }
+    private void intento(){
+        acertos.setText(acertosText.get(2));
+        new Seleccion(timeDificultad.get(dificultad), this).start();
+        new MultiColor(this).start();
     }
 }
