@@ -13,6 +13,7 @@ public class Juego extends Temporizador {
     @Override
     public void run() {
         lineGame = true;
+        stop = false;
         updateTime(getGame().getTime());
         temporizador(getGame().getTime());
         lineGame = false;

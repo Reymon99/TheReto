@@ -112,7 +112,7 @@ public class Game extends Visor implements ActionListener {
         Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 3, 5, 1), 1,
                 new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
     }
-    public JDialog play(){
+    protected JDialog play(){
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.getContentPane().setLayout(new GridBagLayout());
@@ -176,7 +176,34 @@ public class Game extends Visor implements ActionListener {
     }
     public JDialog estadisticas(){
         JDialog dialog = new JDialog();
-
+        dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        dialog.getContentPane().setLayout(new GridBagLayout());
+        dialog.setUndecorated(false);
+        acierto--;
+        JLabel sta = new JLabel("Estadísticas", SwingConstants.CENTER);
+        sta.setFont(new Font(Font.DIALOG, Font.BOLD, 32));
+        JTextArea stadis = new JTextArea();
+        stadis.setTabSize(4);
+        stadis.setOpaque(false);
+        stadis.append("\tIntentos: " + Seleccion.intentos + '\n');
+        stadis.append("\tAciertos: " + acierto + '\n');
+        stadis.append("\tDesaciertos: " + (Seleccion.intentos - acierto) + '\n');
+        stadis.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+        stadis.setEditable(false);
+        JButton volver = new JButton("Volver");
+        volver.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        volver.addActionListener((e) -> {
+            dialog.dispose();
+            volver();
+        });
+        Constrains.addComp(sta, dialog.getContentPane(), new Rectangle(0, 0, 1, 1), 1, 1,
+                new Insets(8, 10, 5, 10), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(stadis, dialog.getContentPane(), new Rectangle(0, 1, 1, 1), 1, 1,
+                new Insets(5, 2, 5, 8), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
+        Constrains.addCompX(volver, dialog.getContentPane(), new Rectangle(0, 2, 1, 1), 1,
+                new Insets(5, 7, 5, 7), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
         return dialog;
     }
     private JPanel toolBar(){
