@@ -1,16 +1,15 @@
 package threads;
 import gui.Game;
+import tools.Acciones;
 import javax.swing.*;
 import java.util.HashMap;
-public abstract class Temporizador extends Thread {
+public abstract class Temporizador extends Thread implements Acciones {
     private int second;
     private int minute;
     private Game game;
-    private char pausa;
     private HashMap<Character, Long> pausaTime;
-    public Temporizador(String clock, Game game, char pausa){
+    public Temporizador(String clock, Game game){
         this.game = game;
-        this.pausa = pausa;
         this.minute = Integer.parseInt(clock.substring(0, clock.indexOf(':')));
         this.second = Integer.parseInt(clock.substring(clock.indexOf(':') + 1));
         loadPause();
@@ -36,14 +35,18 @@ public abstract class Temporizador extends Thread {
                 minute--;
             }
             else second--;
-            try {
-                Thread.sleep(pausaTime.get(pausa));
-            } catch (InterruptedException e) {//None
-            }
+            action();
             updateTime(clock);
         }
     }
     protected Game getGame() {
         return game;
+    }
+    @Override
+    public void action() {
+        try {
+            Thread.sleep(pausaTime.get(game.getDificultad()));
+        } catch (InterruptedException e) {//None
+        }
     }
 }

@@ -4,17 +4,17 @@ import tools.Events;
 import tools.Paneles;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 class Contenedor extends JPanel {
     private static HashMap<Paneles, Game> games;
-    Contenedor(){
-        setLayout(new CardLayout());
+    static {
         games = new HashMap<>();
         games.put(Paneles.GAME_FACIL, new Game('F'));
         games.put(Paneles.GAME_INTERMEDIO, new Game('I'));
         games.put(Paneles.GAME_DIFICIL, new Game('D'));
+    }
+    Contenedor(){
+        setLayout(new CardLayout());
         add(Paneles.WELCOME.toString(), new Welcome());
         add(Paneles.LEVES.toString(), levels());
         add(Paneles.GAME_FACIL.toString(), games.get(Paneles.GAME_FACIL));

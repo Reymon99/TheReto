@@ -1,5 +1,7 @@
 package gui;
+import threads.Juego;
 import threads.MultiColor;
+import threads.Seleccion;
 import tools.Colour;
 import tools.Constrains;
 import tools.Events;
@@ -14,12 +16,15 @@ import java.util.HashMap;
 public class Game extends Visor implements ActionListener {
     private char dificultad;
     private HashMap<Character, String> text;
+    private HashMap<Character, String> timeDificultad;
     private JLabel time;
     private JLabel aciertos;
     private JLabel intentos;
     private JLabel color;
     private JLabel acertos;
     private JLabel timeGame;
+    private int acierto;
+    private JDialog continuePlay;
     private final ArrayList<String> acertosText;
     public static final ArrayList<Colour> colors;
     {
@@ -29,7 +34,7 @@ public class Game extends Visor implements ActionListener {
         acertosText.add("");
     }
     static {
-        colors = new ArrayList<>();
+        colors = new ArrayList<>(5);
         colors.add(new Colour("Amarillo", Color.YELLOW));
         colors.add(new Colour("Azul", Color.BLUE));
         colors.add(new Colour("Verde", Color.GREEN));
@@ -39,10 +44,15 @@ public class Game extends Visor implements ActionListener {
     Game(char dificultad){
         super();
         this.dificultad = dificultad;
+        acierto = 0;
         text = new HashMap<>();
         text.put('F', "Nivel Fácil");
         text.put('I', "Nivel Intermedio");
         text.put('D', "Nivel Díficil");
+        timeDificultad = new HashMap<>();
+        timeDificultad.put('F', "00:15");
+        timeDificultad.put('I', "00:10");
+        timeDificultad.put('D', "00:08");
         init();
     }
     private void init(){
@@ -76,16 +86,15 @@ public class Game extends Visor implements ActionListener {
         green.setPreferredSize(yellow.getPreferredSize());
         red.setPreferredSize(yellow.getPreferredSize());
         white.setPreferredSize(yellow.getPreferredSize());
+        yellow.setActionCommand("0");
+        blue.setActionCommand("1");
+        green.setActionCommand("2");
+        red.setActionCommand("3");
+        white.setActionCommand("4");
         color.setOpaque(true);
         color.setBackground(Color.YELLOW);
         color.setForeground(Color.BLUE);
         color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        /*color.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Temporizador.lineGame = false;
-            }
-        });*/
         Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
                 new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
@@ -103,7 +112,7 @@ public class Game extends Visor implements ActionListener {
         Constrains.addCompX(toolBar(), getContenido(), new Rectangle(0, 3, 5, 1), 1,
                 new Insets(10, 0, 0, 0), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
     }
-    JDialog play(){
+    public JDialog play(){
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.getContentPane().setLayout(new GridBagLayout());
@@ -111,14 +120,15 @@ public class Game extends Visor implements ActionListener {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            //new Temporizador("00:30", this, false, dificultad, Time.TIME).start();
+            new Juego("03:30", this).start();
+            new Seleccion(timeDificultad.get(dificultad), this).start();
             new MultiColor(this).start();
         });
         JButton volver = new JButton("Volver");
         volver.setFont(play.getFont());
         volver.addActionListener((e) -> {
             dialog.dispose();
-            Events.show(Paneles.LEVES);
+            volver();
         });
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
         level.setFont(new Font(Font.MONOSPACED, Font.BOLD, 28));
@@ -136,25 +146,29 @@ public class Game extends Visor implements ActionListener {
         dialog.setLocationRelativeTo(this);
         return dialog;
     }
-    public JDialog continuePlay(){
-        JDialog dialog = new JDialog();
-        dialog.getContentPane().setLayout(new GridBagLayout());
-        dialog.setUndecorated(false);
+    private JDialog continuePlay(){
+        continuePlay = new JDialog();
+        continuePlay.getContentPane().setLayout(new GridBagLayout());
+        continuePlay.setUndecorated(false);
         JLabel theReto = new JLabel("The Reto!", SwingConstants.CENTER);
         theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 32));
         JButton volver = new JButton("Volver");
         volver.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         volver.addActionListener((e) -> {
-            dialog.dispose();
-            Events.show(Paneles.LEVES);
+            continuePlay.dispose();
+            volver();
         });
-
-        Constrains.addComp(theReto, dialog.getContentPane(), new Rectangle(0, 0, 2, 1), 1, 1,
+        Constrains.addComp(theReto, continuePlay.getContentPane(), new Rectangle(0, 0, 2, 1), 1, 1,
                 new Insets(5, 15, 5, 15), GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL);
-        Constrains.addComp(volver, dialog.getContentPane(), new Rectangle(1, 1, 1, 1), 1, 1,
+        Constrains.addComp(volver, continuePlay.getContentPane(), new Rectangle(1, 1, 1, 1), 1, 1,
                 new Insets(15, 10, 10, 30), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
+        continuePlay.pack();
+        continuePlay.setLocationRelativeTo(this);
+        return continuePlay;
+    }
+    public JDialog estadisticas(){
+        JDialog dialog = new JDialog();
+
         return dialog;
     }
     private JPanel toolBar(){
@@ -164,7 +178,7 @@ public class Game extends Visor implements ActionListener {
         timeGame = new JLabel(time.getText());
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
         intentos = new JLabel("Intentos: 0");
-        aciertos = new JLabel("Aciertos: 0");
+        aciertos = new JLabel(aciertos());
         Constrains.addCompX(intentos, panel, new Rectangle(0, 0, 1, 1), 1,
                 new Insets(1, 10, 1, 1), GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL);
         Constrains.addCompX(aciertos, panel, new Rectangle(1, 0, 1, 1), 1,
@@ -180,9 +194,6 @@ public class Game extends Visor implements ActionListener {
     public JLabel getTime() {
         return time;
     }
-    public JLabel getAciertos() {
-        return aciertos;
-    }
     public JLabel getIntentos() {
         return intentos;
     }
@@ -192,8 +203,32 @@ public class Game extends Visor implements ActionListener {
     public JLabel getTimeGame(){
         return timeGame;
     }
+    public char getDificultad(){
+        return dificultad;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (Juego.lineGame && !Seleccion.lineIntento) {
+            if (Integer.parseInt(e.getActionCommand()) == MultiColor.foreground) {
+                aciertos.setText(aciertos());
+                aciertos.updateUI();
+                updateUI();
+            }
+            continuePlay().setVisible(true);
+        } else estadisticas().setVisible(true);
+    }
+    private String aciertos(){
+        return aciertos(acierto++);
+    }
+    private String aciertos(int acer){
+        return "Aciertos: " + acer;
+    }
+    public JDialog getContinuePlay(){
+        return continuePlay;
+    }
+    private void volver(){
+        Events.show(Paneles.LEVES);
+        aciertos.setText(aciertos(acierto=0));
+        intentos.setText("Intentos: " + (Seleccion.intentos=0));
     }
 }

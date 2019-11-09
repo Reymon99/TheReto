@@ -18,7 +18,7 @@ public class Welcome extends JPanel {
         this.arduino.conectarArduino();
     }
     private void init(){
-        JTextArea theReto = new JTextArea("The\nRetho");
+        JTextArea theReto = new JTextArea("The\nReto");
         theReto.setFont(new Font(Font.MONOSPACED, Font.BOLD + Font.ITALIC, 120));
         theReto.setOpaque(false);
         theReto.setEditable(false);

@@ -7,8 +7,8 @@ public class Seleccion extends Temporizador {
         intentos = 0;
         lineIntento = false;
     }
-    public Seleccion(String clock, Game game, char pausa) {
-        super(clock, game, pausa);
+    public Seleccion(String clock, Game game) {
+        super(clock, game);
     }
     @Override
     public void run() {
@@ -24,5 +24,9 @@ public class Seleccion extends Temporizador {
         getGame().getIntentos().setText("Intentos: " + (++intentos));
         getGame().getIntentos().updateUI();
         getGame().updateUI();
+    }
+    @Override
+    public void action() {
+        if (Juego.lineGame) super.action();
     }
 }

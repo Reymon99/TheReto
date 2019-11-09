@@ -1,12 +1,12 @@
 package threads;
 import gui.Game;
 public class Juego extends Temporizador {
-    protected static boolean lineGame;
+    public static boolean lineGame;
     static {
         lineGame = false;
     }
-    public Juego(String clock, Game game, char pausa) {
-        super(clock, game, pausa);
+    public Juego(String clock, Game game) {
+        super(clock, game);
     }
     @Override
     public void run() {
@@ -14,5 +14,10 @@ public class Juego extends Temporizador {
         updateTime(getGame().getTime());
         temporizador(getGame().getTime());
         lineGame = false;
+        try {
+            getGame().getContinuePlay().dispose();
+        } catch (Exception e){//None
+        }
+        getGame().estadisticas().setVisible(true);
     }
 }

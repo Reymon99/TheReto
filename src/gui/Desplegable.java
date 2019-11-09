@@ -1,8 +1,6 @@
 package gui;
 import tools.Acciones;
 import tools.Constrains;
-import tools.Events;
-import tools.Paneles;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
