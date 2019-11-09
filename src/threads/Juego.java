@@ -1,7 +1,7 @@
 package threads;
 import gui.Game;
 public class Juego extends Temporizador {
-    private static boolean lineGame;
+    protected static boolean lineGame;
     static {
         lineGame = false;
     }
@@ -11,7 +11,7 @@ public class Juego extends Temporizador {
     @Override
     public void run() {
         lineGame = true;
-        timeUp(getGame().getTime());
+        updateTime(getGame().getTime());
         temporizador(getGame().getTime());
         lineGame = false;
     }

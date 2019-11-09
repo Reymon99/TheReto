@@ -18,7 +18,7 @@ public abstract class Temporizador extends Thread {
     private String format(int number){
         return String.valueOf(String.valueOf(number).length() == 2 ? number : "0" + number);
     }
-    protected void timeUp(JLabel clock){
+    protected void updateTime(JLabel clock){
         clock.setText(format(minute) + ':' + format(second));
         clock.updateUI();
         game.updateUI();
@@ -28,10 +28,6 @@ public abstract class Temporizador extends Thread {
         pausaTime.put('F', 1000L);
         pausaTime.put('I', 800L);
         pausaTime.put('D', 600L);
-    }
-    private void gameIntento(){
-        intentosUp();
-        temporizador(game.getTimeGame());
     }
     protected void temporizador(JLabel clock){
         while (minute != 0 || second != 0) {
@@ -44,15 +40,8 @@ public abstract class Temporizador extends Thread {
                 Thread.sleep(pausaTime.get(pausa));
             } catch (InterruptedException e) {//None
             }
-            timeUp(clock);
+            updateTime(clock);
         }
-    }
-
-    public boolean isLineGame() {
-        return lineGame;
-    }
-    public void setLineGame(boolean lineGame) {
-        this.lineGame = lineGame;
     }
     protected Game getGame() {
         return game;
