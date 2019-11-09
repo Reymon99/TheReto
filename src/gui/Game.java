@@ -1,18 +1,14 @@
 package gui;
 import threads.MultiColor;
-import threads.Temporizador;
 import tools.Colour;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
-import tools.Time;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class Game extends Visor implements ActionListener {
@@ -84,12 +80,12 @@ public class Game extends Visor implements ActionListener {
         color.setBackground(Color.YELLOW);
         color.setForeground(Color.BLUE);
         color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        color.addMouseListener(new MouseAdapter() {
+        /*color.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 Temporizador.lineGame = false;
             }
-        });
+        });*/
         Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
                 new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
