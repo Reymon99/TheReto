@@ -1,2 +1,2 @@
 # The Reto
-Piensa un color y mecaniza otro
+Lee un color y mecaniza otro
