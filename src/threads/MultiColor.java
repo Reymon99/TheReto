@@ -24,7 +24,7 @@ public class MultiColor extends Thread {
             game.getColor().setText(Game.colors.get(background).getText());
             if (Seleccion.lineIntento) {
                 try {
-                    Thread.sleep(60);
+                    Thread.sleep(44);
                 } catch (InterruptedException e) {//None
                 }
             } else sendArduino(Game.colors.get(background).getText());

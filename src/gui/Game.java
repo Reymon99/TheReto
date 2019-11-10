@@ -191,7 +191,7 @@ public class Game extends Visor implements ActionListener {
         stadis.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
         stadis.setEditable(false);
         JButton volver = new JButton("Volver");
-        volver.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        volver.setFont(new Font(Font.DIALOG, Font.BOLD, 13));
         volver.addActionListener((e) -> {
             dialog.dispose();
             volver();
@@ -208,7 +208,6 @@ public class Game extends Visor implements ActionListener {
     }
     private JPanel toolBar(){
         JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         time = new JLabel("00:00");
         timeGame = new JLabel(time.getText());
         JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
