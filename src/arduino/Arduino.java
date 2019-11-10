@@ -1,13 +1,14 @@
 package arduino;
 import gui.Welcome;
+import panamahitek.Arduino.PanamaHitek_Arduino;
 public class Arduino {
-    private String arduino;
+    private PanamaHitek_Arduino arduino;
     private Welcome welcome;
     private boolean conexion;
     private static Arduino instancia;
     private Arduino(Welcome welcome){
         this.welcome = welcome;
-        this.arduino = null;
+        this.arduino = new PanamaHitek_Arduino();
         this.conexion = false;
     }
     public static Arduino getConexion(Welcome welcome) throws NullPointerException {
@@ -18,7 +19,7 @@ public class Arduino {
     public static Arduino getConexion(){
         return getConexion(null);
     }
-    public String conectarArduino(){
+    public void conectarArduino(){
         if (arduino == null || conexion) {
             new Thread(() -> {
                 try {
@@ -38,11 +39,13 @@ public class Arduino {
                 }
             }).start();
         }
-        return arduino;
     }
     private void conexion() throws ConexionArduinoException {
-        arduino = "Conectando";
-        if (arduino.isEmpty()) throw new ConexionArduinoException("Error de Conexión.");
+        try {
+            arduino.arduinoTX("COM3", 9600);
+        } catch (Exception e) {
+            throw new ConexionArduinoException("Error de Conexión.");
+        }
     }
     private void updateLabels(){
         welcome.getConexion().updateUI();
