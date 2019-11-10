@@ -20,7 +20,7 @@ public class Arduino {
         return getConexion(null);
     }
     public void conectarArduino(){
-        if (arduino == null || conexion) {
+        if (arduino != null || conexion) {
             new Thread(() -> {
                 try {
                     String press = welcome.getPress().getText();
@@ -43,8 +43,18 @@ public class Arduino {
     private void conexion() throws ConexionArduinoException {
         try {
             arduino.arduinoTX("COM3", 9600);
+            conexion = true;
         } catch (Exception e) {
+            conexion = false;
             throw new ConexionArduinoException("Error de Conexión.");
+        }
+    }
+    public void sendDato(String data){
+        if (conexion && data != null && !data.isEmpty()) {
+            try {
+                arduino.sendData(data);
+            } catch (Exception e) {//None
+            }
         }
     }
     private void updateLabels(){
@@ -54,5 +64,12 @@ public class Arduino {
     }
     public boolean isConexion() {
         return conexion;
+    }
+    public void closeOnConexion(){
+        sendDato("0");
+        try {
+            arduino.killArduinoConnection();
+        } catch (Exception e) {//None
+        }
     }
 }
