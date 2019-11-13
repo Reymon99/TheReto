@@ -78,6 +78,11 @@ public class Game extends Visor implements ActionListener {
         green.setPreferredSize(yellow.getPreferredSize());
         red.setPreferredSize(yellow.getPreferredSize());
         white.setPreferredSize(yellow.getPreferredSize());
+        yellow.setMinimumSize(yellow.getPreferredSize());
+        blue.setMinimumSize(yellow.getPreferredSize());
+        green.setMinimumSize(yellow.getPreferredSize());
+        red.setMinimumSize(yellow.getPreferredSize());
+        white.setMinimumSize(yellow.getPreferredSize());
         yellow.setActionCommand("0");
         blue.setActionCommand("1");
         green.setActionCommand("2");
@@ -167,6 +172,7 @@ public class Game extends Visor implements ActionListener {
         return continuePlay;
     }
     public JDialog estadisticas(){
+        Arduino.getConexion().sendDato(Contenedor.colors.get(MultiColor.foreground).getLedClosed());
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.getContentPane().setLayout(new GridBagLayout());
