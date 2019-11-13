@@ -25,7 +25,10 @@ public class Welcome extends JPanel {
         theReto.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (arduino.isConexion()) Events.show(Paneles.LEVES);
+                if (arduino.isConexion()){
+                    arduino.ledOnAll();
+                    Events.show(Paneles.LEVES);
+                }
             }
         });
         press = new JLabel("Presione cualquier tecla para continuar", SwingConstants.CENTER);

@@ -1,5 +1,6 @@
 package threads;
 import arduino.Arduino;
+import gui.Contenedor;
 import gui.Game;
 import java.util.Random;
 public class MultiColor extends Thread {
@@ -20,9 +21,9 @@ public class MultiColor extends Thread {
         while (Seleccion.lineIntento) {
             random();//si o si debe existir asi Majé diga que es ilogico
             while (background == foreground) random();//en caso que sea igual lo rompe hasta que sea diferente //
-            game.getColor().setBackground(Game.colors.get(background).getColor());
-            game.getColor().setForeground(Game.colors.get(foreground).getColor());
-            game.getColor().setText(Game.colors.get(background).getText());
+            game.getColor().setBackground(Contenedor.colors.get(background).getColor());
+            game.getColor().setForeground(Contenedor.colors.get(foreground).getColor());
+            game.getColor().setText(Contenedor.colors.get(background).getText());
             if (Seleccion.lineIntento) {
                 try {
                     Thread.sleep(44);
@@ -30,7 +31,7 @@ public class MultiColor extends Thread {
                 }
             }
         }
-        sendArduino(Game.colors.get(foreground).getLedOpen());
+        sendArduino(Contenedor.colors.get(foreground).getLedOpen());
     }
     private void sendArduino(String color) {
         //Wait Oscar

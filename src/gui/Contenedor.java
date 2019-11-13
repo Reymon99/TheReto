@@ -1,19 +1,28 @@
 package gui;
+import tools.Colour;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
-class Contenedor extends JPanel {
+public class Contenedor extends JPanel {
     private static HashMap<Paneles, Game> games;
+    public static final ArrayList<Colour> colors;
     static {
+        colors = new ArrayList<>(5);
+        colors.add(new Colour("Amarillo", Color.YELLOW, 1, 0));
+        colors.add(new Colour("Azul", Color.BLUE, 3, 2));
+        colors.add(new Colour("Verde", Color.GREEN, 5, 4));
+        colors.add(new Colour("Rojo", Color.RED, 7, 6));
+        colors.add(new Colour("Blanco", Color.WHITE, 9, 8));
         games = new HashMap<>();
         games.put(Paneles.GAME_FACIL, new Game('F'));
         games.put(Paneles.GAME_INTERMEDIO, new Game('I'));
         games.put(Paneles.GAME_DIFICIL, new Game('D'));
     }
-    Contenedor(){
+    public Contenedor(){
         setLayout(new CardLayout());
         add(Paneles.WELCOME.toString(), new Welcome());
         add(Paneles.LEVES.toString(), levels());

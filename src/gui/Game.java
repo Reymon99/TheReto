@@ -27,7 +27,6 @@ public class Game extends Visor implements ActionListener {
     private final ArrayList<String> acertosText;
     private final HashMap<Character, String> text;
     private final HashMap<Character, String> timeDificultad;
-    public static final ArrayList<Colour> colors;
     {
         acertosText = new ArrayList<>(3);
         acertosText.add("Intentalo nuevamente");
@@ -41,14 +40,6 @@ public class Game extends Visor implements ActionListener {
         text.put('F', "Nivel Fácil");
         text.put('I', "Nivel Intermedio");
         text.put('D', "Nivel Díficil");
-    }
-    static {
-        colors = new ArrayList<>(5);
-        colors.add(new Colour("Amarillo", Color.YELLOW, 1, 0));
-        colors.add(new Colour("Azul", Color.BLUE, 3, 2));
-        colors.add(new Colour("Verde", Color.GREEN, 5, 4));
-        colors.add(new Colour("Rojo", Color.RED, 7, 6));
-        colors.add(new Colour("Blanco", Color.WHITE, 9, 8));
     }
     Game(char dificultad){
         super();
@@ -71,11 +62,11 @@ public class Game extends Visor implements ActionListener {
         green.setFont(yellow.getFont());
         red.setFont(yellow.getFont());
         white.setFont(yellow.getFont());
-        yellow.setBackground(Game.colors.get(0).getColor());
-        blue.setBackground(Game.colors.get(1).getColor());
-        green.setBackground(Game.colors.get(2).getColor());
-        red.setBackground(Game.colors.get(3).getColor());
-        white.setBackground(Game.colors.get(4).getColor());
+        yellow.setBackground(Contenedor.colors.get(0).getColor());
+        blue.setBackground(Contenedor.colors.get(1).getColor());
+        green.setBackground(Contenedor.colors.get(2).getColor());
+        red.setBackground(Contenedor.colors.get(3).getColor());
+        white.setBackground(Contenedor.colors.get(4).getColor());
         blue.setForeground(Color.WHITE);
         yellow.addActionListener(this);
         blue.addActionListener(this);
@@ -281,6 +272,6 @@ public class Game extends Visor implements ActionListener {
     }
     private void ledOff(){
         Arduino arduino = Arduino.getConexion();
-        arduino.sendDato(colors.get(MultiColor.foreground).getLedClosed());
+        arduino.sendDato(Contenedor.colors.get(MultiColor.foreground).getLedClosed());
     }
 }

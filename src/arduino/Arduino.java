@@ -1,5 +1,5 @@
 package arduino;
-import gui.Game;
+import gui.Contenedor;
 import gui.Welcome;
 import panamahitek.Arduino.PanamaHitek_Arduino;
 public class Arduino {
@@ -43,7 +43,7 @@ public class Arduino {
     }
     private void conexion() throws ConexionArduinoException {
         try {
-            arduino.arduinoTX("COM3", 9600);
+            arduino.arduinoTX("COM3", 9600);//este es el puerto y la velocidad de la conexion a arduino//
             conexion = true;
         } catch (Exception e) {
             conexion = false;
@@ -74,13 +74,13 @@ public class Arduino {
         }
     }//cierra la conexion//
     public void ledOnAll(){
-        for (int i = 0; i < Game.colors.size(); i++) {
-            sendDato(Game.colors.get(i).getLedOpen());
+        for (int i = 0; i < Contenedor.colors.size(); i++) {
+            sendDato(Contenedor.colors.get(i).getLedOpen());
         }
     }
     public void ledOffAll(){
-        for (int i = 0; i < Game.colors.size(); i++) {
-            sendDato(Game.colors.get(i).getLedClosed());
+        for (int i = 0; i < Contenedor.colors.size(); i++) {
+            sendDato(Contenedor.colors.get(i).getLedClosed());
         }
     }
 }

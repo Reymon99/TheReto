@@ -1,4 +1,5 @@
 package gui;
+import arduino.Arduino;
 import tools.Acciones;
 import tools.Constrains;
 import javax.swing.*;
@@ -19,6 +20,7 @@ class Desplegable extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                Arduino.getConexion().ledOffAll();
                 acciones.action();
             }
         });
