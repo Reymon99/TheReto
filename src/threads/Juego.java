@@ -1,4 +1,5 @@
 package threads;
+import arduino.Arduino;
 import gui.Game;
 public class Juego extends Temporizador {
     public static boolean lineGame;
@@ -21,7 +22,11 @@ public class Juego extends Temporizador {
             getGame().getContinuePlay().dispose();
         } catch (Exception e){//None
         }
-        if (!stop) getGame().estadisticas().setVisible(true);
+        if (!stop){
+            Arduino arduino = Arduino.getConexion();
+            arduino.ledOffAll();
+            getGame().estadisticas().setVisible(true);
+        }
     }
     @Override
     public void action() {

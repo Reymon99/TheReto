@@ -73,12 +73,12 @@ public class Arduino {
         } catch (Exception e) {//None
         }
     }//cierra la conexion//
-    private void ledOnAll(){
+    public void ledOnAll(){
         for (int i = 0; i < Game.colors.size(); i++) {
             sendDato(Game.colors.get(i).getLedOpen());
         }
     }
-    private void ledOffAll(){
+    public void ledOffAll(){
         for (int i = 0; i < Game.colors.size(); i++) {
             sendDato(Game.colors.get(i).getLedClosed());
         }
