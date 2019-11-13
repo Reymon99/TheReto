@@ -43,11 +43,11 @@ public class Game extends Visor implements ActionListener {
     }
     static {
         colors = new ArrayList<>(5);
-        colors.add(new Colour("Amarillo", Color.YELLOW));
-        colors.add(new Colour("Azul", Color.BLUE));
-        colors.add(new Colour("Verde", Color.GREEN));
-        colors.add(new Colour("Rojo", Color.RED));
-        colors.add(new Colour("Blanco", Color.WHITE));
+        colors.add(new Colour("Amarillo", Color.YELLOW, 1, 0));
+        colors.add(new Colour("Azul", Color.BLUE, 3, 2));
+        colors.add(new Colour("Verde", Color.GREEN, 5, 4));
+        colors.add(new Colour("Rojo", Color.RED, 7, 6));
+        colors.add(new Colour("Blanco", Color.WHITE, 9, 8));
     }
     Game(char dificultad){
         super();

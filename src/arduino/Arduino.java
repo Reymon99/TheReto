@@ -1,16 +1,17 @@
 package arduino;
+import gui.Game;
 import gui.Welcome;
 import panamahitek.Arduino.PanamaHitek_Arduino;
 public class Arduino {
-    private PanamaHitek_Arduino arduino;
+    private PanamaHitek_Arduino arduino;//libreria que maneja el arduino//
     private Welcome welcome;
-    private boolean conexion;
+    private boolean conexion;//el estado de conexion//
     private static Arduino instancia;
     private Arduino(Welcome welcome){
         this.welcome = welcome;
         this.arduino = new PanamaHitek_Arduino();
         this.conexion = false;
-    }
+    }//constructor //
     public static Arduino getConexion(Welcome welcome) throws NullPointerException {
         if (instancia == null && welcome != null) instancia = new Arduino(welcome);
         if (instancia == null) throw new NullPointerException("instancia Arduino null");
@@ -66,10 +67,20 @@ public class Arduino {
         return conexion;
     }
     public void closeOnConexion(){
-        sendDato("0");
+        ledOffAll();
         try {
             arduino.killArduinoConnection();
         } catch (Exception e) {//None
+        }
+    }//cierra la conexion//
+    private void ledOnAll(){
+        for (int i = 0; i < Game.colors.size(); i++) {
+            sendDato(Game.colors.get(i).getLedOpen());
+        }
+    }
+    private void ledOffAll(){
+        for (int i = 0; i < Game.colors.size(); i++) {
+            sendDato(Game.colors.get(i).getLedClosed());
         }
     }
 }
