@@ -1,4 +1,5 @@
 package gui;
+import arduino.Arduino;
 import threads.Juego;
 import threads.MultiColor;
 import threads.Seleccion;
@@ -250,6 +251,7 @@ public class Game extends Visor implements ActionListener {
             } else acertos.setText(acertosText.get(0));
             acertos.updateUI();
             updateUI();
+            ledOff();
             continuePlay().setVisible(true);
         } else estadisticas().setVisible(true);
     }
@@ -276,5 +278,9 @@ public class Game extends Visor implements ActionListener {
         Seleccion.lineIntento = true;
         new Seleccion(timeDificultad.get(dificultad), this).start();
         new MultiColor(this).start();
+    }
+    private void ledOff(){
+        Arduino arduino = Arduino.getConexion();
+        arduino.sendDato(colors.get(MultiColor.foreground).getLedClosed());
     }
 }
