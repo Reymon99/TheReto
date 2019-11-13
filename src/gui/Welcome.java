@@ -41,10 +41,10 @@ public class Welcome extends JPanel {
                 new Insets(20, 15, 0, 30), GridBagConstraints.NORTHWEST, GridBagConstraints.NONE);
         Constrains.addCompX(descripcion, this, new Rectangle(0, 1, 1, 1), 0.1,
                 new Insets(0, 30, 10, 8), GridBagConstraints.WEST, GridBagConstraints.BOTH);
-        Constrains.addCompX(conexion, this, new Rectangle(0, 2, 1, 1), 1,
-                new Insets(95, 20, 1, 50), GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
-        Constrains.addComp(press, this, new Rectangle(0, 3, 1, 1), 0, 0,
-                new Insets(30, 20, 1, 20), GridBagConstraints.SOUTH, GridBagConstraints.BOTH);
+        Constrains.addComp(conexion, this, new Rectangle(0, 2, 1, 1), 1, 1,
+                new Insets(75, 20, 1, 50), GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL);
+        Constrains.addComp(press, this, new Rectangle(0, 3, 1, 1), 0, 1,
+                new Insets(15, 20, 3, 20), GridBagConstraints.NORTH, GridBagConstraints.BOTH);
     }
     public JLabel getPress() {
         return press;
