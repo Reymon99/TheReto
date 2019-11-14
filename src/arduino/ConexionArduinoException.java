@@ -7,5 +7,5 @@ public class ConexionArduinoException extends Exception {
     @Override
     public String getMessage() {
         return message;
-    }
+    }//justificar el estado de la conexion
 }

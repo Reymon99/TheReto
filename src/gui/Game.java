@@ -239,9 +239,9 @@ public class Game extends Visor implements ActionListener {
         return dificultad;
     }
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) {// aqui se manejan todo los botones
         if (Juego.lineGame && !Seleccion.lineIntento) {
-            if (Integer.parseInt(e.getActionCommand()) == MultiColor.foreground) {
+            if (Integer.parseInt(e.getActionCommand()) == MultiColor.foreground) {//para saber el color que esta seleccionado
                 aciertos.setText(aciertos());
                 acertos.setText(acertosText.get(1));
                 aciertos.updateUI();
@@ -250,7 +250,7 @@ public class Game extends Visor implements ActionListener {
             updateUI();
             ledOff();
             continuePlay().setVisible(true);
-        } else estadisticas().setVisible(true);
+        }
     }
     private String aciertos(){
         return aciertos(acierto++);

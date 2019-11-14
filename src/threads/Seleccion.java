@@ -7,11 +7,11 @@ public class Seleccion extends Temporizador {
         intentos = 0;
         lineIntento = false;
     }
-    public Seleccion(String clock, Game game) {
+    public Seleccion(String clock, Game game) {//constructor de los hilos
         super(clock, game);
     }
     @Override
-    public void run() {
+    public void run() {//aqui esta el hilo de esta vaina
         if (Juego.lineGame) {
             updateIntentos();
             updateTime(getGame().getTimeGame());
