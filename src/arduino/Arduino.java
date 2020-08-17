@@ -17,25 +17,25 @@ public class Arduino {
         if (instancia == null) throw new NullPointerException("instancia Arduino null");
         return instancia;
     }
-    public static Arduino getConexion(){
+    public static Arduino getConexion(){//llamamos la sobrecarga al welcome
         return getConexion(null);
     }
     public void conectarArduino(){//establece conexion por el puerto serie//
         if (arduino != null || conexion) {
             new Thread(() -> {//si existe un solo metodo lambda por que hay un solo proceso corriendo//
-                try {
-                    String press = welcome.getPress().getText();
+                try {//este es el hilo para que por mas tecla que le den no bloquee el programa, ejecutando la conexión en segundo plano
+                    String press = welcome.getPress().getText();//mientras se conecta no muestre el texto de presionar tecla
                     welcome.getPress().setText("");
-                    welcome.getConexion().setText("Conectando Arduino...");
+                    welcome.getConexion().setText("🐢 Conectando Arduino...");
                     updateLabels();
                     conexion();
-                    welcome.getConexion().setText("Conexión Exitosa.");
+                    welcome.getConexion().setText("✔ Conexión Exitosa.");
                     welcome.getPress().setText(press);
                     updateLabels();
                     conexion = true;
                 } catch (ConexionArduinoException e) {//atrapa la excepcion
                     welcome.getConexion().setText(e.getMessage());
-                    welcome.getPress().setText("Revise la conexión del arduino y reinicie el programa");
+                    welcome.getPress().setText("✖ Revise la conexión del arduino y reinicie el programa");
                     conexion = false;
                 }
             }).start();//se ejecuta el hilo de la conexion mientras hace la conexion para que johan no lo bloquee
@@ -47,7 +47,7 @@ public class Arduino {
             conexion = true;
         } catch (Exception e) {//captura el error
             conexion = false;
-            throw new ConexionArduinoException("Error de Conexión.");//manda la excepcion
+            throw new ConexionArduinoException("✖ Error de Conexión.");//manda la excepcion
         }
     }
     public void sendDato(String data){//aqui se envia el dato al arduino//
@@ -58,6 +58,10 @@ public class Arduino {
             }
         }
     }
+
+    /**
+     * Refresca la interfaz grafica de Welcome
+     */
     private void updateLabels(){
         welcome.getConexion().updateUI();
         welcome.getPress().updateUI();
@@ -70,6 +74,7 @@ public class Arduino {
         ledOffAll();
         try {//mata la conexion //
             arduino.killArduinoConnection();
+            conexion=false;
         } catch (Exception e) {//None
         }
     }//cierra la conexion//

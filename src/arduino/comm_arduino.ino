@@ -1,4 +1,4 @@
-const int  LED_Amarillo = 8;
+const int LED_Amarillo = 8;
 const int LED_Azul = 9;
 const int LED_Rojo = 10;
 const int LED_Verde = 11;
@@ -6,7 +6,7 @@ const int LED_Blanco = 12;
 int Byte_Entrada = 0;
 
 void setup () {
-  Serial.begin (9600);//apertura puerto
+  Serial.begin (9600);//apertura puerto serial
   pinMode(LED_Amarillo, OUTPUT);
   pinMode(LED_Azul, OUTPUT);
   pinMode(LED_Rojo, OUTPUT);

@@ -6,29 +6,30 @@ import java.util.HashMap;
 public abstract class Temporizador extends Thread implements Acciones {
     private int second;
     private int minute;
-    private Game game;
+    private Game game;//apuntador a la clase game
     private HashMap<Character, Long> pausaTime;
-    public Temporizador(String clock, Game game){
+    public Temporizador(String clock, Game game){//constructor del hilo padre
         this.game = game;
-        this.minute = Integer.parseInt(clock.substring(0, clock.indexOf(':')));
-        this.second = Integer.parseInt(clock.substring(clock.indexOf(':') + 1));
+        String[] time = clock.split(":");
+        this.minute = Integer.parseInt(time[0]);
+        this.second = Integer.parseInt(time[1]);
         loadPause();
     }
-    private String format(int number){
-        return String.valueOf(String.valueOf(number).length() == 2 ? number : "0" + number);
+    private String format(int number){//metodo que retorna el formato de dos digitos para numeros
+        return number > 10 ? String.valueOf(number) : "0" + number;
     }
     protected void updateTime(JLabel clock){
         clock.setText(format(minute) + ':' + format(second));
         clock.updateUI();
         game.updateUI();
     }
-    private void loadPause(){
+    private void loadPause(){// el tiempo que pone a dormir para hacer los cambios
         pausaTime = new HashMap<>();
         pausaTime.put('F', 1000L);
         pausaTime.put('I', 800L);
         pausaTime.put('D', 600L);
     }
-    protected void temporizador(JLabel clock){
+    protected void temporizador(JLabel clock){//es el metodo contador
         while (minute != 0 || second != 0) {
             if (second == 0) {
                 second = 59;
@@ -45,7 +46,7 @@ public abstract class Temporizador extends Thread implements Acciones {
     @Override
     public void action() {
         try {
-            Thread.sleep(pausaTime.get(game.getDificultad()));
+            Thread.sleep(pausaTime.get(game.getDificultad()));//duerme según la dificultad
         } catch (InterruptedException e) {//None
         }
     }

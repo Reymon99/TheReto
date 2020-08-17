@@ -1,23 +1,20 @@
 package gui;
 import arduino.Arduino;
-
 import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 public class TheRetos extends JFrame {
     private TheRetos(){
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setContentPane(new Contenedor());
-        pack();//ajusta todo el contenido//
+        pack();//ajusta todo el contenido al frame//
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(false);//no le cambia el tamaño al panel
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 Arduino arduino = Arduino.getConexion();
-                arduino.ledOffAll();
                 arduino.closeOnConexion();
+                dispose();
             }
             @Override
             public void windowClosed(WindowEvent e) {

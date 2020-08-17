@@ -8,5 +8,5 @@ public class Events {
     }
     public static void show(Paneles paneles){
         ((CardLayout)Events.contenedor.getLayout()).show(Events.contenedor, paneles.toString());
-    }
+    }// aqui traemos el panel con lo que se le solicita
 }

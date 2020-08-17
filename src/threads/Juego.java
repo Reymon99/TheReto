@@ -1,9 +1,12 @@
 package threads;
 import arduino.Arduino;
 import gui.Game;
-public class Juego extends Temporizador {
-    public static boolean lineGame;
-    public static boolean stop;
+
+import javax.swing.*;
+
+public class Juego extends Temporizador {//temporizador es la clase padre
+    public static boolean lineGame;//linea del juego
+    public static boolean stop;//linea que detiene el tiempo
     static {
         lineGame = false;
         stop = false;
@@ -12,20 +15,21 @@ public class Juego extends Temporizador {
         super(clock, game);
     }
     @Override
-    public void run() {
+    public void run() {//este es el metodo que arranca el hilo
         lineGame = true;
         stop = false;
-        updateTime(getGame().getTime());
-        temporizador(getGame().getTime());
+        JLabel time = getGame().getTime();
+        updateTime(time);
+        temporizador(time);//si el tiempo no llega cero no se ejecuta
         lineGame = false;
         try {
-            getGame().getContinuePlay().dispose();
-        } catch (Exception e){//None
+            getGame().getContinuePlay().dispose();//se encarga de matar la ventana de continuación del juego
+        } catch (Exception e){//en el caso de que la ventana no exista
         }
         if (!stop){
             Arduino arduino = Arduino.getConexion();
             arduino.ledOffAll();
-            getGame().estadisticas().setVisible(true);
+            getGame().estadistde continuacion del juegoicas().setVisible(true);
         }
     }
     @Override

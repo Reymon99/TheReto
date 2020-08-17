@@ -3,7 +3,6 @@ import arduino.Arduino;
 import threads.Juego;
 import threads.MultiColor;
 import threads.Seleccion;
-import tools.Colour;
 import tools.Constrains;
 import tools.Events;
 import tools.Paneles;
@@ -16,14 +15,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 public class Game extends Visor implements ActionListener {
     private char dificultad;
-    private JLabel time;
+    private JLabel time;//tiempo de juego
     private JLabel aciertos;
     private JLabel intentos;
-    private JLabel color;
-    private JLabel acertos;
-    private JLabel timeGame;
-    private int acierto;
-    private JDialog continuePlay;
+    private JLabel color;//rectangulo de color mostrado
+    private JLabel acertos;//informa si acerto el color o se equivoco
+    private JLabel timeGame;//tiempo de ciclo
+    private int acierto;//numero de aciertos
+    private JDialog continuePlay; //mensaje de continuar
     private final ArrayList<String> acertosText;
     private final HashMap<Character, String> text;
     private final HashMap<Character, String> timeDificultad;
@@ -33,7 +32,7 @@ public class Game extends Visor implements ActionListener {
         acertosText.add("Felicitaciones acertaste!!!");
         acertosText.add("");
         timeDificultad = new HashMap<>();
-        timeDificultad.put('F', "00:15");
+        timeDificultad.put('F', "00:15");//define el tiempo de los hilos
         timeDificultad.put('I', "00:10");
         timeDificultad.put('D', "00:08");
         text = new HashMap<>();
@@ -42,7 +41,7 @@ public class Game extends Visor implements ActionListener {
         text.put('D', "Nivel Díficil");
     }
     Game(char dificultad){
-        super();
+        super();//este e s el constructor del padre
         this.dificultad = dificultad;
         acierto = 0;
         init();
@@ -50,30 +49,24 @@ public class Game extends Visor implements ActionListener {
     private void init(){
         acertos = new JLabel(acertosText.get(2), SwingConstants.CENTER);
         color = new JLabel("Color", SwingConstants.CENTER);
-        JButton yellow = new JButton();
+        JButton yellow = new JButton(); //son los botones de los colores
         JButton blue = new JButton();
         JButton green = new JButton();
         JButton red = new JButton();
         JButton white = new JButton();
-        yellow.setFont(new Font(Font.MONOSPACED, Font.BOLD, 16));
         color.setFont(new Font(Font.DIALOG, Font.BOLD, 80));
         acertos.setFont(new Font(Font.MONOSPACED, Font.ITALIC, 22));
-        blue.setFont(yellow.getFont());
-        green.setFont(yellow.getFont());
-        red.setFont(yellow.getFont());
-        white.setFont(yellow.getFont());
         yellow.setBackground(Contenedor.colors.get(0).getColor());
         blue.setBackground(Contenedor.colors.get(1).getColor());
         green.setBackground(Contenedor.colors.get(2).getColor());
         red.setBackground(Contenedor.colors.get(3).getColor());
         white.setBackground(Contenedor.colors.get(4).getColor());
-        blue.setForeground(Color.WHITE);
         yellow.addActionListener(this);
         blue.addActionListener(this);
         green.addActionListener(this);
         red.addActionListener(this);
         white.addActionListener(this);
-        yellow.setPreferredSize(new Dimension(80, 30));
+        yellow.setPreferredSize(new Dimension(80, 30));//este ajusta el tamaño y se aplica a todos
         blue.setPreferredSize(yellow.getPreferredSize());
         green.setPreferredSize(yellow.getPreferredSize());
         red.setPreferredSize(yellow.getPreferredSize());
@@ -88,10 +81,10 @@ public class Game extends Visor implements ActionListener {
         green.setActionCommand("2");
         red.setActionCommand("3");
         white.setActionCommand("4");
-        color.setOpaque(true);
-        color.setBackground(Color.YELLOW);
-        color.setForeground(Color.BLUE);
-        color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        color.setOpaque(true);//establece que aparezca el fondo
+        color.setBackground(Color.YELLOW);//establece el color de fondo
+        color.setForeground(Color.BLUE);//este es el color de la letra
+        color.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));//se establece el borde que tiene
         Constrains.addComp(color, getContenido(), new Rectangle(0, 0, 5, 1), 1, 1,
                 new Insets(50, 60, 50, 60), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         Constrains.addComp(yellow, getContenido(), new Rectangle(0, 1, 1, 1), 1, 1,
@@ -117,7 +110,7 @@ public class Game extends Visor implements ActionListener {
         play.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         play.addActionListener((e) -> {
             dialog.dispose();
-            new Juego("03:30", this).start();
+            new Juego("03:30", this).start();//primer hilo que se ejecuta
             intento();
         });
         JButton volver = new JButton("Volver");
@@ -144,9 +137,8 @@ public class Game extends Visor implements ActionListener {
     }
     private JDialog continuePlay(){
         continuePlay = new JDialog();
-        continuePlay.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        continuePlay.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);//por mas que lo intente no cierra la ventana
         continuePlay.getContentPane().setLayout(new GridBagLayout());
-        continuePlay.setUndecorated(false);
         JLabel theReto = new JLabel("The Reto!", SwingConstants.CENTER);
         theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 32));
         JButton volver = new JButton("Volver");
@@ -168,16 +160,14 @@ public class Game extends Visor implements ActionListener {
         Constrains.addComp(continuar, continuePlay.getContentPane(), new Rectangle(0, 1, 1, 1), 1, 1,
                 new Insets(15, 30, 10, 5), GridBagConstraints.CENTER, GridBagConstraints.BOTH);
         continuePlay.pack();
-        continuePlay.setLocationRelativeTo(this);
+        continuePlay.setLocationRelativeTo(this);//lanza la ventana en la mitad panel
         return continuePlay;
     }
     public JDialog estadisticas(){
-        Arduino.getConexion().sendDato(Contenedor.colors.get(MultiColor.foreground).getLedClosed());
         JDialog dialog = new JDialog();
         dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         dialog.getContentPane().setLayout(new GridBagLayout());
-        dialog.setUndecorated(false);
-        acierto--;
+        acierto = acierto == 0 ? 0 : acierto - 1;// exactitud de las estadisticas
         JLabel sta = new JLabel("Estadísticas", SwingConstants.CENTER);
         sta.setFont(new Font(Font.DIALOG, Font.BOLD, 32));
         JTextArea stadis = new JTextArea();
@@ -207,8 +197,10 @@ public class Game extends Visor implements ActionListener {
     private JPanel toolBar(){
         JPanel panel = new JPanel(new GridBagLayout());
         time = new JLabel("00:00");
+        time.setToolTipText("Tiempo de Juego");
         timeGame = new JLabel(time.getText());
-        JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);
+        timeGame.setToolTipText("Tiempo de Ciclo");
+        JLabel level = new JLabel(text.get(dificultad), SwingConstants.CENTER);//nivel en que nos encontramos
         intentos = new JLabel("Intentos: 0");
         aciertos = new JLabel(aciertos());
         Constrains.addCompX(intentos, panel, new Rectangle(0, 0, 1, 1), 1,
@@ -239,12 +231,12 @@ public class Game extends Visor implements ActionListener {
         return dificultad;
     }
     @Override
-    public void actionPerformed(ActionEvent e) {// aqui se manejan todo los botones
+    public void actionPerformed(ActionEvent e) {// aqui se manejan todos los botones
         if (Juego.lineGame && !Seleccion.lineIntento) {
             if (Integer.parseInt(e.getActionCommand()) == MultiColor.foreground) {//para saber el color que esta seleccionado
-                aciertos.setText(aciertos());
+                aciertos.setText(aciertos());//aqui se actualiza los aciertos
                 acertos.setText(acertosText.get(1));
-                aciertos.updateUI();
+                aciertos.updateUI();//actualiza la interfaz
             } else acertos.setText(acertosText.get(0));
             acertos.updateUI();
             updateUI();
@@ -252,19 +244,19 @@ public class Game extends Visor implements ActionListener {
             continuePlay().setVisible(true);
         }
     }
-    private String aciertos(){
+    private String aciertos(){//este es el metodo de los aciertos
         return aciertos(acierto++);
     }
     private String aciertos(int acer){
         return "Aciertos: " + acer;
     }
-    public JDialog getContinuePlay(){
+    public JDialog getContinuePlay(){//este retorna a la ventanita del juego
         return continuePlay;
     }
     private void volver(){
         Events.show(Paneles.LEVES);
         aciertos.setText(aciertos(acierto=0));
-        intentos.setText("Intentos: " + (Seleccion.intentos=0));
+        intentos.setText("Intentos: " + (Seleccion.intentos=0));//los intentos se controlan desde un hilo
         acertos.setText(acertosText.get(2));
         updateUI();
         Juego.lineGame = false;
@@ -272,9 +264,9 @@ public class Game extends Visor implements ActionListener {
     }
     private void intento(){
         acertos.setText(acertosText.get(2));
-        Seleccion.lineIntento = true;
-        new Seleccion(timeDificultad.get(dificultad), this).start();
-        new MultiColor(this).start();
+        Seleccion.lineIntento = true;//indica que vuelve a iniciar el ciclo
+        new Seleccion(timeDificultad.get(dificultad), this).start();//contabiliza el ciclo
+        new MultiColor(this).start();//inicia el ciclo de los colores
     }
     private void ledOff(){
         Arduino arduino = Arduino.getConexion();

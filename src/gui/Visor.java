@@ -2,18 +2,17 @@ package gui;
 import tools.Constrains;
 import javax.swing.*;
 import java.awt.*;
-public class Visor extends JPanel {
-    private JPanel contenido;
+public class Visor extends JPanel {//clase padre
+    private JPanel contenido;//es lo que se va mostrar en el panel que se muestra en visor
     Visor(){
-        setLayout(new BorderLayout(7, 7));
-        contenido = new JPanel(new GridBagLayout());
+        setLayout(new BorderLayout(7, 7));//aqui hay otro layout para definir el tamaño
+        contenido = new JPanel(new GridBagLayout());//como se muestra el baglayout
         init();
     }
     private void init(){
         JPanel head = new JPanel(new GridBagLayout());
         JTextArea theReto = new JTextArea("The\nReto!");
         JLabel descripcion = new JLabel("Lee un color y mecaniza otro", SwingConstants.RIGHT);
-        theReto.setToolTipText("Desarrollado por Sergio Majé");
         theReto.setFont(new Font(Font.DIALOG, Font.BOLD + Font.ITALIC, 30));
         theReto.setOpaque(false);
         theReto.setEditable(false);

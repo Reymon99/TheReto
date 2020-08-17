@@ -13,20 +13,20 @@ class Desplegable extends JPanel {
     private Acciones acciones;
     Desplegable(char text, String descripcion, Color color){
         setLayout(new GridBagLayout());
-        setBackground(new Color(156, 118, 226, 95));
+        setBackground(new Color(156, 118, 226, 95));//este es el color de lavanda !
         this.text = text;
         this.descripcion = descripcion;
         this.color = color;
-        addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {//captura acciones del mouse
             @Override
-            public void mousePressed(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {//captura la presión en un botón del mouse
                 Arduino.getConexion().ledOffAll();
-                acciones.action();
+                acciones.action();//ejecuta la acción que esta dentro de la interfaz activa la funcionalidad del evento
             }
         });
         init();
     }
-    private void init(){
+    private void init(){//configura la interfaz y sus componentes
         JLabel letra = new JLabel(String.valueOf(text), JLabel.CENTER);
         letra.setFont(new Font(Font.DIALOG, Font.BOLD, 82));
         letra.addMouseListener(getMouseListeners()[0]);
@@ -50,5 +50,5 @@ class Desplegable extends JPanel {
     }
     protected void setAcciones(Acciones acciones){
         this.acciones = acciones;
-    }
+    }//aqui se define la funcionalidad del evento
 }
