@@ -29,7 +29,7 @@ public class Juego extends Temporizador {//temporizador es la clase padre
         if (!stop){
             Arduino arduino = Arduino.getConexion();
             arduino.ledOffAll();
-            getGame().estadistde continuacion del juegoicas().setVisible(true);
+            getGame().estadisticas().setVisible(true);
         }
     }
     @Override
