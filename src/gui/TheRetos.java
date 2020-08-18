@@ -5,6 +5,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 public class TheRetos extends JFrame {
     private TheRetos(){
+        super("The Reto");
         setContentPane(new Contenedor());
         pack();//ajusta todo el contenido al frame//
         setLocationRelativeTo(null);
